@@ -1,5 +1,5 @@
-ENV_FILE=.env
-ENV_TEMPLATE=.env.template
+ENV_FILE= .env
+ENV_TEMPLATE= .env.template
 COMPOSE_FILE=docker/docker-compose.dev.yml
 
 # Permet de contrôler le préfixe des volumes/containers créés par Compose
@@ -10,7 +10,7 @@ SPRING_PROFILE ?= dev
 # Compose command (profil Spring injecté)
 DC = SPRING_PROFILES_ACTIVE=$(SPRING_PROFILE) docker compose -p $(COMPOSE_PROJECT_NAME) --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
 
-.PHONY: init up build rebuild down down-volumes reset reset-db ps logs logs-backend logs-frontend logs-db \
+.PHONY: env up build rebuild down down-volumes reset reset-db ps logs logs-backend logs-frontend logs-db \
         backend-shell frontend-shell db-shell test test-it \
         up-dev up-prod \
         down-dev down-prod down-volumes-dev down-volumes-prod \
