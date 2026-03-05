@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* ─── Design tokens as CSS custom properties ───────────────────────────── */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Surface */
+  --color-surface: #f8fafc;
+  --color-surface-alt: #f1f5f9;
+
+  /* Border */
+  --color-border: #e2e8f0;
+
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+
+  /* Brand */
+  --color-brand: #0ea5e9;
+  --color-brand-hover: #0284c7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Dark mode (class-based, set by ThemeProvider) ────────────────────── */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --color-surface: #0f172a;
+  --color-surface-alt: #1e293b;
+  --color-border: #1e293b;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-brand: #38bdf8;
+  --color-brand-hover: #0ea5e9;
+}
+
+/* ─── Base resets ───────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Focus visible globally ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* ─── Skip-to-content link (accessibility) ─────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--color-brand);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: top 0.1s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
