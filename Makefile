@@ -111,6 +111,9 @@ logs-db:
 	docker compose -p $(COMPOSE_PROJECT_NAME) --env-file $(ENV_FILE) -f $(COMPOSE_FILE) logs -f db
 
 # ---- npm-like ----
+ps-dev:
+	$(MAKE) ps COMPOSE_PROJECT_NAME=heritage-dev
+
 logs-dev:
 	$(MAKE) logs COMPOSE_PROJECT_NAME=heritage-dev
 
