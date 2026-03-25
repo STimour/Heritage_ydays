@@ -24,9 +24,6 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
-    @Column(columnDefinition = "TEXT")
-    private String bio;
-
     private String pseudo;
 
     private String photo;

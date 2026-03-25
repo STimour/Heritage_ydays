@@ -10,7 +10,6 @@ class User {
   email VARCHAR
   password_hash VARCHAR
   display_name VARCHAR
-  bio TEXT
   pseudo VARCHAR
   photo VARCHAR
   created_at DATETIME
@@ -21,19 +20,11 @@ class Story {
   author_id INT FK
   title VARCHAR
   content TEXT
-  visibility ENUM(private, circle, public)
-  cover_image VARCHAR
-  is_commentable BOOLEAN
   resume TEXT
-  temps_lecture_calcul INT
-  created_at DATETIME
-}
-
-class StoryAttachment {
-  +INT id PK
-  story_id INT FK
-  file_url VARCHAR
-  file_type ENUM(image, video, audio, other)
+  cover_image VARCHAR
+  visibility ENUM(PRIVATE, CUSTOM, PUBLIC)
+  main_theme ENUM(Theme)
+  is_published BOOLEAN
   created_at DATETIME
 }
 
@@ -48,6 +39,7 @@ class Folder {
 class Circle {
   +INT id PK
   name VARCHAR
+  description TEXT
   owner_id INT FK
   created_at DATETIME
 }
@@ -58,6 +50,14 @@ class Tag {
   created_at DATETIME
 }
 
+class FriendRequest {
+  +INT id PK
+  sender_id INT FK
+  receiver_id INT FK
+  status ENUM(PENDING, ACCEPTED, REJECTED)
+  created_at DATETIME
+}
+
 %% =========================
 %% ASSOCIATIVE TABLES
 %% =========================
@@ -65,12 +65,6 @@ class Tag {
 class CircleMember {
   circle_id INT FK
   user_id INT FK
-}
-
-class FolderShare {
-  folder_id INT FK
-  user_id INT FK
-  shared_at DATETIME
 }
 
 class StoryTag {
@@ -88,33 +82,9 @@ class FolderStory {
   story_id INT FK
 }
 
-class StoryRead {
-  +INT id PK
-  story_id INT FK
-  user_id INT FK
-  temps_lecture INT
-  read_at DATETIME
-}
-
 class StoryInterest {
   story_id INT FK
   user_id INT FK
-  created_at DATETIME
-}
-
-class StoryRating {
-  +INT id PK
-  story_id INT FK
-  user_id INT FK
-  rating INT
-  comment TEXT
-  created_at DATETIME
-}
-
-class SearchHistory {
-  +INT id PK
-  user_id INT FK
-  search_query VARCHAR
   created_at DATETIME
 }
 
@@ -125,25 +95,19 @@ class SearchHistory {
 User "1" --> "0..*" Story : écrit
 User "1" --> "0..*" Folder : possède
 User "1" --> "0..*" Circle : possède
-User "1" --> "0..*" SearchHistory : recherche
-User "1" --> "0..*" StoryRead : lit
-User "1" --> "0..*" StoryInterest : s'intéresse
-User "1" --> "0..*" StoryRating : note
+User "1" --> "0..*" StoryInterest : enregistre
+User "1" --> "0..*" FriendRequest : envoie
+User "1" --> "0..*" FriendRequest : reçoit
 
-Story "1" --> "0..*" StoryAttachment : contient
 Story "1" --> "0..*" StoryTag
 Story "1" --> "0..*" StoryCircle
 Story "1" --> "0..*" FolderStory
-Story "1" --> "0..*" StoryRead
 Story "1" --> "0..*" StoryInterest
-Story "1" --> "0..*" StoryRating
 
 Tag "1" --> "0..*" StoryTag
 Circle "1" --> "0..*" StoryCircle
-Folder "1" --> "0..*" FolderStory
-Folder "1" --> "0..*" FolderShare
 Circle "1" --> "0..*" CircleMember
+Folder "1" --> "0..*" FolderStory
 
 User "1" --> "0..*" CircleMember
-User "1" --> "0..*" FolderShare
 ```
