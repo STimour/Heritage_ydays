@@ -1,26 +1,39 @@
-src/
-├── app/
-│   ├── globals.css          ← tokens CSS + dark mode class-based + skip-to-content
-│   └── layout.tsx           ← ThemeProvider wrappant toute l'app
-│
-├── providers/
-│   └── ThemeProvider.tsx    ← light/dark/system, localStorage, toggle
-│
-├── lib/
-│   └── cn.ts                ← clsx + tailwind-merge utility
-│
-├── types/
-│   ├── index.ts             ← types génériques (ID, PaginatedResponse, AsyncState…)
-│   ├── story.ts             ← Story, StoryChapter, StoryAuthor, StoryGenre…
-│   └── user.ts              ← User, AuthCredentials, RegisterPayload, AuthSession…
-│
-├── styles/
-│   └── tokens.ts            ← design tokens (colors, spacing, fontSize, shadows…)
-│
-└── components/
-    ├── atoms/               Button · Input · Textarea · Label · IconButton
-    │                        Avatar · Badge · Card · Divider · Typography · Spinner
-    ├── molecules/           SearchBar · StoryCard · UserInfoRow · FormField · NavigationItem
-    ├── organisms/           Header · Sidebar · StoryList · StoryGrid · AuthForm
-    ├── templates/           DashboardTemplate · FeedTemplate · AuthTemplate · StoryReaderTemplate
-    └── layouts/             MainLayout
+# Frontend Héritage (Next.js)
+
+## Lancer le projet
+
+```bash
+npm install
+npm run dev
+```
+
+Build production:
+
+```bash
+npm run build
+npm run start
+```
+
+## PWA
+
+- Manifest: `public/manifest.json`
+- Icônes: `public/icons/*`
+- Service worker généré via `@ducanh2912/next-pwa` en build production.
+- Écran offline: `/offline`.
+- Bloc d’installation visible sur la landing (`/`) via le composant `InstallAppBanner`.
+
+## Mocks
+
+- Données centralisées: `src/mocks/data.ts`
+
+## Couche API
+
+- Client HTTP: `src/lib/http/client.ts`
+- Services métier: `src/lib/api/services.ts`
+- Types domaine/API: `src/types/*`
+
+## Brancher progressivement le backend Java
+
+1. Garder les types alignés sur les entités backend (`Story`, `User`, `Visibility`).
+2. Remplacer les méthodes mock dans `src/lib/api/services.ts` par des appels `http()` vers les routes réelles dès qu’elles sont disponibles.
+3. Conserver les composants/pages inchangés grâce à la couche d’abstraction API.

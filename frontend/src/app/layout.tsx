@@ -1,50 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/providers/ThemeProvider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Heritage",
-  description: "Heritage Application",
+  title: "Héritage",
+  description: "Transmettre les histoires qui comptent.",
   manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Heritage",
-  },
-  formatDetection: {
-    telephone: false,
+  icons: {
+    icon: [
+      { url: "/icons/icon-16x16.svg", sizes: "16x16", type: "image/svg+xml" },
+      { url: "/icons/icon-32x32.svg", sizes: "32x32", type: "image/svg+xml" },
+    ],
+    apple: "/icons/icon-192x192.svg",
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#000000",
-};
+export const viewport: Viewport = { themeColor: "#4f46e5" };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider defaultTheme="system">
-          {children}
-        </ThemeProvider>
-      </body>
+    <html lang="fr">
+      <body className="bg-slate-100 text-slate-900">{children}</body>
     </html>
   );
 }
