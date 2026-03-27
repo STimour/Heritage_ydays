@@ -1,5 +1,5 @@
 package com.backend.heritage.model.enums;
 
 public enum Visibility {
-    PRIVATE, CIRCLE, PUBLIC
+    PRIVATE, CUSTOM, PUBLIC
 }
