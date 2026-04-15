@@ -1,6 +1,9 @@
 import { ApiErrorShape } from "@/types/api";
+import { BACKEND_API_BASE_URL } from "@/lib/http/config";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+type HttpOptions = RequestInit & {
+  auth?: boolean;
+};
 
 export class ApiError extends Error {
   status: number;
@@ -11,17 +14,33 @@ export class ApiError extends Error {
   }
 }
 
-export async function http<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
+function resolveUrl(path: string): string {
+  return `${BACKEND_API_BASE_URL}${path}`;
+}
+
+export async function http<T>(path: string, init?: HttpOptions): Promise<T> {
+  const headers = new Headers(init?.headers ?? {});
+  if (!headers.has("Content-Type") && init?.body) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  const res = await fetch(resolveUrl(path), {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers ?? {}),
-    },
+    headers,
+    credentials: "include",
+    cache: init?.cache ?? "no-store",
   });
 
   if (!res.ok) {
     let message = "Une erreur est survenue";
+
+    if (init?.auth && res.status === 401) {
+      await fetch("/api/auth/logout", { method: "POST" });
+      if (typeof window !== "undefined" && window.location.pathname !== "/login") {
+        window.location.assign("/login");
+      }
+    }
+
     try {
       const data = await res.json();
       message = data.message ?? message;

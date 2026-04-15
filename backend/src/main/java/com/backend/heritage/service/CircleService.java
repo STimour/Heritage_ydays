@@ -1,5 +1,14 @@
 package com.backend.heritage.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.backend.heritage.dto.CircleDTO;
 import com.backend.heritage.dto.CreateCircleRequest;
 import com.backend.heritage.model.entity.Circle;
@@ -7,16 +16,10 @@ import com.backend.heritage.model.entity.CircleMember;
 import com.backend.heritage.model.key.CircleMemberId;
 import com.backend.heritage.repository.CircleMemberRepository;
 import com.backend.heritage.repository.CircleRepository;
+import com.backend.heritage.repository.StoryCircleRepository;
 import com.backend.heritage.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class CircleService {
 
     private final CircleRepository circleRepository;
     private final CircleMemberRepository circleMemberRepository;
+    private final StoryCircleRepository storyCircleRepository;
     private final UserRepository userRepository;
 
     public List<CircleDTO> getMyCircles(String email) {
@@ -36,7 +40,9 @@ public class CircleService {
                 .collect(Collectors.toMap(row -> (Long) row[0], row -> (Long) row[1]));
 
         return circles.stream()
-                .map(c -> CircleDTO.from(c, countByCircle.getOrDefault(c.getId(), 0L)))
+            .map(c -> CircleDTO.from(c,
+                countByCircle.getOrDefault(c.getId(), 0L),
+                storyCircleRepository.countByCircle_Id(c.getId())))
                 .toList();
     }
 
@@ -63,7 +69,7 @@ public class CircleService {
             }
         }
 
-        return CircleDTO.from(circle, memberCount);
+        return CircleDTO.from(circle, memberCount, 0L);
     }
 
     @Transactional

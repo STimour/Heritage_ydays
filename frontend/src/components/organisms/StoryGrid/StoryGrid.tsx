@@ -2,16 +2,16 @@ import React from "react";
 import { cn } from "@/lib/cn";
 import { StoryCard } from "@/components/molecules/StoryCard";
 import { Spinner } from "@/components/atoms/Spinner";
-import type { Story } from "@/types/story";
+import type { StoryCardModel } from "@/types/domain";
 
 export type GridColumns = 1 | 2 | 3 | 4;
 
 export interface StoryGridProps {
-  stories: Story[];
+  stories: StoryCardModel[];
   columns?: GridColumns;
   isLoading?: boolean;
   emptyMessage?: string;
-  onStoryClick?: (story: Story) => void;
+  onStoryClick?: (story: StoryCardModel) => void;
   className?: string;
 }
 

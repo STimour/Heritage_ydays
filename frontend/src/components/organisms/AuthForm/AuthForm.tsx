@@ -6,7 +6,7 @@ import { Button } from "@/components/atoms/Button";
 import { Divider } from "@/components/atoms/Divider";
 import { Title, Text } from "@/components/atoms/Typography";
 import { FormField } from "@/components/molecules/FormField";
-import type { AuthCredentials, RegisterPayload } from "@/types/user";
+import type { LoginRequest, SignupRequest } from "@/types/api";
 
 export type AuthMode = "login" | "register";
 
@@ -14,7 +14,7 @@ export interface AuthFormProps {
   mode?: AuthMode;
   isLoading?: boolean;
   error?: string | null;
-  onSubmit?: (data: AuthCredentials | RegisterPayload) => void;
+  onSubmit?: (data: LoginRequest | SignupRequest) => void;
   onModeChange?: (mode: AuthMode) => void;
   className?: string;
 }
@@ -29,15 +29,15 @@ export function AuthForm({
 }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload =
       mode === "login"
-        ? ({ email, password } satisfies AuthCredentials)
-        : ({ email, password, name, username } satisfies RegisterPayload);
+        ? ({ email, password } satisfies LoginRequest)
+        : ({ fullName, email, password, confirmPassword } satisfies SignupRequest);
     onSubmit?.(payload);
   };
 
@@ -69,16 +69,16 @@ export function AuthForm({
               type="text"
               autoComplete="name"
               required
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+              value={fullName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFullName(e.target.value)}
             />
             <FormField
-              label="Username"
-              type="text"
-              autoComplete="username"
+              label="Confirm password"
+              type="password"
+              autoComplete="new-password"
               required
-              value={username}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+              value={confirmPassword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
             />
           </>
         )}

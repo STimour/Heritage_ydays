@@ -2,13 +2,13 @@ import React from "react";
 import { cn } from "@/lib/cn";
 import { StoryCard } from "@/components/molecules/StoryCard";
 import { Spinner } from "@/components/atoms/Spinner";
-import type { Story } from "@/types/story";
+import type { StoryCardModel } from "@/types/domain";
 
 export interface StoryListProps {
-  stories: Story[];
+  stories: StoryCardModel[];
   isLoading?: boolean;
   emptyMessage?: string;
-  onStoryClick?: (story: Story) => void;
+  onStoryClick?: (story: StoryCardModel) => void;
   className?: string;
 }
 
