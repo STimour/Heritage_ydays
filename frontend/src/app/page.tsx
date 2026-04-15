@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { InstallAppBanner } from "@/components/app/InstallAppBanner";
-import { Button } from "@/components/ui/Button";
+import { getServerAuthToken } from "@/lib/auth/server";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const token = await getServerAuthToken();
+  const discoverHref = token ? "/app/discover" : "/login";
+
   return (
     <main className="mx-auto min-h-screen max-w-6xl px-4 py-8 md:px-8">
       <header className="mb-12 flex items-center justify-between">
@@ -17,7 +20,7 @@ export default function LandingPage() {
         <div>
           <h1 className="text-5xl font-bold">Chaque vie est un chef-d’œuvre.</h1>
           <p className="mt-4 text-slate-600">Écrivez, partagez et transmettez les souvenirs de votre famille dans une application simple et élégante.</p>
-          <div className="mt-6 flex gap-3"><Button>Découvrir les récits</Button><Link href="/signup" className="rounded-xl border px-4 py-2">Commencer</Link></div>
+          <div className="mt-6 flex gap-3"><Link href={discoverHref} className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">Découvrir les récits</Link><Link href="/signup" className="rounded-xl border px-4 py-2">Commencer</Link></div>
         </div>
         <div className="rounded-3xl bg-indigo-100 p-8"><div className="h-64 rounded-2xl border border-indigo-300" /></div>
       </section>

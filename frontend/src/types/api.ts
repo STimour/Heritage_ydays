@@ -1,4 +1,4 @@
-import { Story, User, Visibility } from "./domain";
+import { Theme, Visibility } from "./domain";
 
 export interface ApiErrorShape {
   message: string;
@@ -17,20 +17,29 @@ export interface SignupRequest {
   confirmPassword: string;
 }
 
+export interface SpringPage<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+  first: boolean;
+  last: boolean;
+}
+
 export interface StoryPayload {
   title: string;
   content: string;
-  resume: string;
+  resume?: string;
   visibility: Visibility;
   coverImage?: string;
-  tonalite: string;
+  mainTheme: Theme | null;
   tags: string[];
   isPublished: boolean;
+  folderId?: number;
+  circleId?: number;
 }
 
 export interface AuthResponse {
   token: string;
-  user: User;
 }
-
-export type StoryResponse = Story;

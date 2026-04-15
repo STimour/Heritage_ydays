@@ -1,4 +1,4 @@
-import { Collection, Group, PendingRequest, Story, User } from "@/types/domain";
+import { Collection, Group, PendingRequest, StoryFeedItem, User } from "@/types/domain";
 
 export const mockUsers: User[] = [
   { id: 1, email: "jules@heritage.fr", displayName: "Jules Parto", pseudo: "jules", photo: "" },
@@ -7,66 +7,54 @@ export const mockUsers: User[] = [
   { id: 4, email: "diana@heritage.fr", displayName: "Diana M." },
 ];
 
-export const mockStories: Story[] = [
+export const mockStories: StoryFeedItem[] = [
   {
     id: 101,
-    authorId: 2,
     title: "Le jardin de mes étés d'enfant",
-    content: "Une histoire sur les étés passés chez mes grands-parents...",
-    resume: "Souvenirs de vacances, confitures et longues soirées en famille.",
-    visibility: "PUBLIC",
-    commentable: false,
-    createdAt: "2026-03-25",
+    preview: "Souvenirs de vacances, confitures et longues soirées en famille.",
     tags: ["Famille", "Enfance"],
-    tonalite: "Transmission",
+    mainTheme: "DRAMA",
+    createdAt: "2026-03-25",
+    authorName: "Arthur Rey",
     saveCount: 143,
-    isPublished: true,
   },
   {
     id: 102,
-    authorId: 1,
     title: "Le vieux chêne de mon grand-père",
-    content: "Au fond du jardin, un vieux chêne marquait les saisons...",
-    resume: "Un récit intergénérationnel sur la mémoire familiale.",
-    visibility: "CIRCLE",
-    commentable: false,
-    createdAt: "2026-03-24",
+    preview: "Un récit intergénérationnel sur la mémoire familiale.",
     tags: ["Souvenir", "Enfance"],
-    tonalite: "Nostalgie",
+    mainTheme: "MYSTERY",
+    createdAt: "2026-03-24",
+    authorName: "Jules Parto",
     saveCount: 98,
-    isPublished: true,
   },
   {
     id: 103,
-    authorId: 1,
     title: "Brouillon : histoire de tante Jeanne",
-    content: "Brouillon en cours...",
-    resume: "Brouillon privé.",
-    visibility: "PRIVATE",
-    commentable: false,
-    createdAt: "2026-03-21",
+    preview: "Brouillon privé.",
     tags: ["Famille"],
-    tonalite: "Transmission",
+    mainTheme: "OTHER",
+    createdAt: "2026-03-21",
+    authorName: "Jules Parto",
     saveCount: 0,
-    isPublished: false,
   },
 ];
 
 export const mockCollections: Collection[] = [
-  { id: 1, name: "À lire plus tard", ownerId: 1, storyCount: 12, isPrivate: true },
-  { id: 2, name: "J'ai aimé", ownerId: 1, storyCount: 45, isPrivate: true },
-  { id: 3, name: "Déjà lu", ownerId: 1, storyCount: 12, isPrivate: true },
-  { id: 4, name: "Famille", ownerId: 1, storyCount: 12, isPrivate: true },
+  { id: 1, name: "À lire plus tard", storyCount: 12, isPrivate: true, createdAt: "2026-03-20" },
+  { id: 2, name: "J'ai aimé", storyCount: 45, isPrivate: true, createdAt: "2026-03-19" },
+  { id: 3, name: "Déjà lu", storyCount: 12, isPrivate: true, createdAt: "2026-03-18" },
+  { id: 4, name: "Famille", storyCount: 12, isPrivate: true, createdAt: "2026-03-17" },
 ];
 
 export const mockGroups: Group[] = [
-  { id: 1, name: "Famille", ownerId: 1, description: "Notre cercle familial", memberIds: [1, 2, 3], storyCount: 12 },
-  { id: 2, name: "Proches", ownerId: 1, description: "Amis de confiance", memberIds: [1, 4], storyCount: 45 },
+  { id: 1, name: "Famille", description: "Notre cercle familial", memberCount: 3, createdAt: "2026-03-20", storyCount: 12 },
+  { id: 2, name: "Proches", description: "Amis de confiance", memberCount: 2, createdAt: "2026-03-19", storyCount: 45 },
 ];
 
 export const mockPendingRequests: PendingRequest[] = [
-  { id: 1, fromUser: mockUsers[2] },
-  { id: 2, fromUser: mockUsers[3] },
+  { id: 1, senderId: 3, senderName: mockUsers[2].displayName, senderPhoto: mockUsers[2].photo, createdAt: "2026-03-25" },
+  { id: 2, senderId: 4, senderName: mockUsers[3].displayName, senderPhoto: mockUsers[3].photo, createdAt: "2026-03-26" },
 ];
 
 export const tonalites = ["Transmission", "Nostalgie", "Fierté", "Joie", "Apaisement"];

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 const nav = [
@@ -14,9 +15,10 @@ const nav = [
 
 export function AppShell({ title, children, actions }: { title: string; children: React.ReactNode; actions?: React.ReactNode }) {
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-slate-100">
-      <div className="mx-auto flex max-w-[1400px]">
+      <div className="mx-auto flex max-w-7xl">
         <aside className="hidden min-h-screen w-64 border-r border-slate-200 bg-slate-100 p-5 lg:block">
           <div className="mb-8 h-14 rounded-lg bg-indigo-100" />
           <nav className="space-y-2">
@@ -32,10 +34,26 @@ export function AppShell({ title, children, actions }: { title: string; children
         </aside>
         <main className="flex-1 p-4 md:p-8">
           <header className="mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-2 lg:hidden">☰</div>
+            <button type="button" className="flex items-center gap-2 lg:hidden" onClick={() => setMobileMenuOpen((prev) => !prev)}>
+              ☰
+            </button>
             <h1 className="text-3xl font-bold">{title}</h1>
             <div>{actions}</div>
           </header>
+          {mobileMenuOpen && (
+            <nav className="mb-4 space-y-2 rounded-xl bg-white p-3 lg:hidden">
+              {nav.map(({ href, label, icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${pathname === href ? "bg-slate-100 font-semibold" : "hover:bg-slate-100"}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>{icon}</span> {label}
+                </Link>
+              ))}
+            </nav>
+          )}
           {children}
         </main>
       </div>

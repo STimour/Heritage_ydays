@@ -1,15 +1,9 @@
 package com.backend.heritage.service;
 
-import com.backend.heritage.dto.*;
-import com.backend.heritage.model.entity.*;
-import com.backend.heritage.model.enums.Theme;
-import com.backend.heritage.model.enums.Visibility;
-import com.backend.heritage.model.key.FolderStoryId;
-import com.backend.heritage.model.key.StoryCircleId;
-import com.backend.heritage.model.key.StoryInterestId;
-import com.backend.heritage.model.key.StoryTagId;
-import com.backend.heritage.repository.*;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +12,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.backend.heritage.dto.CreateStoryRequest;
+import com.backend.heritage.dto.LibraryStoryDTO;
+import com.backend.heritage.dto.StoryDetailDTO;
+import com.backend.heritage.dto.StoryFeedItemDTO;
+import com.backend.heritage.model.entity.FolderStory;
+import com.backend.heritage.model.entity.Story;
+import com.backend.heritage.model.entity.StoryCircle;
+import com.backend.heritage.model.entity.StoryInterest;
+import com.backend.heritage.model.entity.StoryTag;
+import com.backend.heritage.model.entity.Tag;
+import com.backend.heritage.model.enums.Theme;
+import com.backend.heritage.model.enums.Visibility;
+import com.backend.heritage.model.key.FolderStoryId;
+import com.backend.heritage.model.key.StoryCircleId;
+import com.backend.heritage.model.key.StoryInterestId;
+import com.backend.heritage.model.key.StoryTagId;
+import com.backend.heritage.repository.CircleRepository;
+import com.backend.heritage.repository.FolderRepository;
+import com.backend.heritage.repository.FolderStoryRepository;
+import com.backend.heritage.repository.StoryCircleRepository;
+import com.backend.heritage.repository.StoryInterestRepository;
+import com.backend.heritage.repository.StoryRepository;
+import com.backend.heritage.repository.StoryTagRepository;
+import com.backend.heritage.repository.TagRepository;
+import com.backend.heritage.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -67,14 +85,21 @@ public class StoryService {
         var user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
+        if (req.visibility() == Visibility.CUSTOM && req.circleId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "circleId est obligatoire pour la visibilité CUSTOM");
+        }
+
+        boolean published = Boolean.TRUE.equals(req.isPublished()) || (req.isPublished() == null && req.visibility() == Visibility.PUBLIC);
+
         var story = storyRepository.save(Story.builder()
                 .author(user)
                 .title(req.title())
                 .content(req.content())
+                .resume(req.resume())
                 .coverImage(req.coverImage())
                 .visibility(req.visibility())
                 .mainTheme(req.mainTheme())
-                .published(req.visibility() == Visibility.PUBLIC)
+                .published(published)
                 .build());
 
         if (req.tags() != null && !req.tags().isEmpty()) {
