@@ -1,0 +1,15 @@
+meta {
+  name: Accept Friend Request (Bob accepts Alice's request)
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/friends/requests/{{friendRequestId}}/accept
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenBob}}
+}

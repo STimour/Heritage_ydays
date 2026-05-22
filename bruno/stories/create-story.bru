@@ -1,0 +1,38 @@
+meta {
+  name: Create Story
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/stories
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Mon histoire de famille",
+    "content": "Il était une fois...",
+    "coverImage": "https://example.com/cover.jpg",
+    "visibility": "PUBLIC",
+    "mainTheme": "ADVENTURE",
+    "tags": ["famille", "souvenir"],
+    "folderId": null,
+    "circleId": null
+  }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("storyId", res.body.id);
+  }
+}

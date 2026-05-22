@@ -1,0 +1,21 @@
+meta {
+  name: Send Friend Request (Alice → Bob)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/friends/requests/{{targetUserId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("friendRequestId", res.body?.id ?? bru.getEnvVar("friendRequestId"));
+  }
+}

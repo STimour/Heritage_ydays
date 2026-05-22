@@ -1,0 +1,15 @@
+meta {
+  name: Add Member To Circle
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/circles/{{circleId}}/members/{{userId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

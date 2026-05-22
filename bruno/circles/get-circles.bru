@@ -1,0 +1,15 @@
+meta {
+  name: Get My Circles
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/circles
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
