@@ -41,6 +41,10 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
             Pageable pageable);
 
     @EntityGraph(attributePaths = "author")
+    @Query("SELECT s FROM Story s WHERE s.id = :id")
+    Optional<Story> findByIdWithAuthor(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = "author")
     @Query("""
             SELECT DISTINCT s FROM Story s
             JOIN FolderStory fs ON fs.story = s
@@ -49,4 +53,20 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
     List<Story> findByFolderId(@Param("folderId") Long folderId);
 
     long countByAuthor_Email(String email);
+
+    @EntityGraph(attributePaths = "author")
+    @Query("""
+            SELECT DISTINCT s FROM Story s
+            JOIN StoryInterest si ON si.story = s
+            WHERE si.user.email = :email
+            """)
+    Page<Story> findSavedByUserEmail(@Param("email") String email, Pageable pageable);
+
+    @EntityGraph(attributePaths = "author")
+    @Query("""
+            SELECT DISTINCT s FROM Story s
+            JOIN StoryCircle sc ON sc.story = s
+            WHERE sc.circle.id = :circleId
+            """)
+    Page<Story> findByCircleId(@Param("circleId") Long circleId, Pageable pageable);
 }

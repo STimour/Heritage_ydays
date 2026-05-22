@@ -1,0 +1,20 @@
+meta {
+  name: Get My Library
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/stories/library
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+query {
+  page: 0
+  size: 10
+}

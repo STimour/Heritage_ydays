@@ -12,4 +12,6 @@ public interface StoryTagRepository extends JpaRepository<StoryTag, StoryTagId> 
 
     @Query("SELECT st FROM StoryTag st JOIN FETCH st.tag WHERE st.id.storyId IN :storyIds")
     List<StoryTag> findWithTagByStoryIdIn(@Param("storyIds") List<Long> storyIds);
+
+    void deleteByStory_Id(Long storyId);
 }

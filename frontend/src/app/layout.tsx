@@ -1,25 +1,48 @@
 import type { Metadata, Viewport } from "next";
+import { Plus_Jakarta_Sans, DM_Sans } from "next/font/google";
 import "./globals.css";
+import ClientLayout from "@/components/layout/ClientLayout";
+
+const displayFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const bodyFont = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Héritage",
-  description: "Transmettre les histoires qui comptent.",
+  title: "Héritage Écrit",
+  description: "Écrivez ce que l'on n'oublie pas.",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Héritage",
+  },
   icons: {
     icon: [
-      { url: "/icons/icon-16x16.svg", sizes: "16x16", type: "image/svg+xml" },
-      { url: "/icons/icon-32x32.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/icons/icon-192x192.svg",
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
 
-export const viewport: Viewport = { themeColor: "#4f46e5" };
+export const viewport: Viewport = {
+  themeColor: "#C4622D",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr">
-      <body className="bg-slate-100 text-slate-900">{children}</body>
+    <html lang="fr" className={`${displayFont.variable} ${bodyFont.variable} h-full`}>
+      <body className="min-h-full flex flex-col"><ClientLayout>{children}</ClientLayout></body>
     </html>
   );
 }

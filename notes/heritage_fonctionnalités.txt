@@ -1,0 +1,76 @@
+page inscription :  nom complet, email, mot de passe, confirmation mot de passe
+page connexion : email, mot de passe
+NB: inscription avec gmail etc pas pour MVP
+
+
+
+
+page d'accueil : fil de lecture : affiche les histoires, avec filtre par theme,  pour une historie on aura : un titre, un texte (les 120 premiers caracteres de l'shitoire), un tag, une date, une image, l'auteur, combien de fois elle a été  enregistrée (à mettre ç jour le diagramme de classe pour ne plus prendre en compte les notes), search barre (coté front)
+
+
+
+
+
+- Page détail de l'histoire :  afficher théme principal, le titre,  l'auteur, la photo de profil de l'auteur, la date, le nombre d'enregistrements, le résumé, ensuite l'histoire ! 
+- à la fin : on affiche des suggestions des histoires qui ont les memes tags :  sous forme de cards comme sur la page d'accueil avec titre, date etc 
+- en haut à droite le lecteur pourra enregistrer cette histoire, ou la partager dans un groupe qu'on aura créé (amis, famille, ....) 
+- un bouton retour en arriere en haut a gauche pour revenir à l'accueil ! 
+
+
+
+
+
+Page dossiers partagés : 
+- Afficher les collections (dossiers de récits) de l'utilisateur sous forme de cards, chaque collection aura un nom, le nombre d'elements( récits) qu'il y aura dedans, search barre (coté front), card ajouter une collection pour créer une collection 
+-bouton créer : pour créer une collection
+
+
+
+
+
+Page sauvegardes : ça sera un clone de la page dossiers partagés sauf que ça sera accessible que par l'utilisateur accessible que par l'utilisateur
+- Afficher les collections (dossiers de récits) que l'utilisateur aura enregistré sous forme de cards comme pour la home, avec possibilité de les ajouter à des dossiers (par theme par exemple) et donc on aura un bouton créer pour créer un dossier et mettre des collections dedans. search barre (coté front)
+
+
+
+
+
+Page détails de collections : des cards pareil que la Home, le front envoie une requete avec l'id de la collection, et le back retourne  les histoires (avec tous les champs nécessaires: les clés étrangéres etc : nom de l'auteur) 
+
+
+
+Page ma bibliotheque : affiche les histoires que l'utilisateur a ecrit : ajouter dans modele histoire un boolean isPublished, les cards c'est comme pour les cards de la Home sauf qu'il y a pas le  nom de l'auteur, avec une card "Ecrire une nouvelle histoire"
+
+
+
+
+Page profil : bouton modifier profil, les infos : Nom, photo, nombre de récits écrits, nombre de collections, nombre de  récits enregistrés, ensuite parametre du compte : Sécurité et confidentialité, supprimer le comtpe, 
+- Page Modification profil :  pseudo, photos etc ! 
+
+
+
+navBar : bouton ecrire une histoire 
+
+
+
+
+Page Création Histoire : Titre de l'histoire, le contenu, l'image, la visibilité (privé, public, personnalisé), selectionner des tags prédéfinis, théme principal  (tonalité)  c'est lui qui sera affiché dans le détail de l'histoire ! un bouton "ajouter a un dossier" et selectionner le groupe ! 
+pas de commentaires (c'est pour une V1)
+ 
+ 
+
+
+- Page de groupes : liste des groupes sous forme de cards, possibilité d'ajouter un groupe
+- Page pour créer un groupe : nom, description, récupérer tous les amis,, on aura un card qui contiendra tous les amis avec possibilité de selectionner ceux qu'on veut ajouter au groupe, ensuite créer ce groupe
+
+
+- Page Mon réseau : affiche les demandes en attente : sous forme de cards ou il y a le nom complet du user avec possibilité d'accepter ou refuser l'inviation et c'est tout ce dont on a besoin ! ensuite mes contacts avec la liste des amis : pareil juste la photo de profil le nom et la possibilité de le supprimer
+
+
+
+
+- Page résultat de recherche si on recherche un ami pour l'ajouter : pareil ça va nous afficher le résultat, avec nom photo de profil et un bouton "ajouter comme ami" ! 
+
+
+
+

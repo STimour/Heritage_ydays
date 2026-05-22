@@ -1,0 +1,21 @@
+meta {
+  name: Get Friend Requests (Bob's incoming)
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/friends/requests
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenBob}}
+}
+
+script:post-response {
+  if (res.status === 200 && res.body.length > 0) {
+    bru.setEnvVar("friendRequestId", res.body[0].id);
+  }
+}

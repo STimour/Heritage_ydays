@@ -1,0 +1,15 @@
+meta {
+  name: Add Story To Folder
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/folders/{{folderId}}/stories/{{storyId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

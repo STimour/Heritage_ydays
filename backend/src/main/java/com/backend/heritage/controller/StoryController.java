@@ -3,6 +3,7 @@ package com.backend.heritage.controller;
 import com.backend.heritage.dto.*;
 import com.backend.heritage.model.enums.Theme;
 import com.backend.heritage.service.StoryService;
+import org.springframework.http.HttpStatus;
 import java.util.Map;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +40,28 @@ public class StoryController {
     }
 
     @GetMapping("/{id}")
-    public StoryDetailDTO getDetail(@PathVariable Long id) {
-        return storyService.getDetail(id);
+    public StoryDetailDTO getDetail(@PathVariable Long id, Authentication auth) {
+        return storyService.getDetail(id, auth.getName());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StoryDetailDTO create(@RequestBody @Valid CreateStoryRequest req, Authentication auth) {
         return storyService.create(req, auth.getName());
+    }
+
+    @PatchMapping("/{id}")
+    public StoryDetailDTO update(@PathVariable Long id, @RequestBody UpdateStoryRequest req, Authentication auth) {
+        return storyService.update(id, req, auth.getName());
+    }
+
+    @GetMapping("/saved")
+    public Page<StoryFeedItemDTO> getSavedStories(
+            Authentication auth,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return storyService.getSavedStories(auth.getName(), PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
     @PostMapping("/{id}/save")

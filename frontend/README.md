@@ -1,39 +1,36 @@
-# Frontend Héritage (Next.js)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Lancer le projet
+## Getting Started
+
+First, run the development server:
 
 ```bash
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Build production:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm run build
-npm run start
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## PWA
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- Manifest: `public/manifest.json`
-- Icônes: `public/icons/*`
-- Service worker généré via `@ducanh2912/next-pwa` en build production.
-- Écran offline: `/offline`.
-- Bloc d’installation visible sur la landing (`/`) via le composant `InstallAppBanner`.
+## Learn More
 
-## Mocks
+To learn more about Next.js, take a look at the following resources:
 
-- Données centralisées: `src/mocks/data.ts`
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Couche API
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- Client HTTP: `src/lib/http/client.ts`
-- Services métier: `src/lib/api/services.ts`
-- Types domaine/API: `src/types/*`
+## Deploy on Vercel
 
-## Brancher progressivement le backend Java
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-1. Garder les types alignés sur les entités backend (`Story`, `User`, `Visibility`).
-2. Remplacer les méthodes mock dans `src/lib/api/services.ts` par des appels `http()` vers les routes réelles dès qu’elles sont disponibles.
-3. Conserver les composants/pages inchangés grâce à la couche d’abstraction API.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

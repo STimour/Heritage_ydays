@@ -4,5 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CreateFolderRequest(
         @NotBlank String name,
-        boolean privateFolder
+        boolean privateFolder,
+        String tone,
+        String description
 ) {}

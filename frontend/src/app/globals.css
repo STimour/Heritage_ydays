@@ -1,3 +1,31 @@
+@import url('https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap');
 @import "tailwindcss";
 
-body { font-family: Inter, Arial, sans-serif; }
+@theme {
+  /* Colors — extracted from Figma */
+  --color-cream: #FBFAF4;
+  --color-dark: #22221F;
+  --color-muted: #585852;
+  --color-sand: #E5E3D5;
+  --color-pink: #E6A8D9;
+  --color-orange: #F37E40;
+  --color-green: #AEE290;
+  --color-blue: #6481DC;
+  --color-white: #FFFFFF;
+
+  /* Fonts */
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-switzer: 'Switzer', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #FBFAF4;
+  color: #22221F;
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
