@@ -1,0 +1,21 @@
+meta {
+  name: Get Stories By Theme
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/stories
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+query {
+  theme: ROMANCE
+  page: 0
+  size: 10
+}

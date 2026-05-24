@@ -47,6 +47,8 @@ public class FolderService {
                 .name(req.name())
                 .owner(owner)
                 .privateFolder(req.privateFolder())
+                .tone(req.tone())
+                .description(req.description())
                 .build());
 
         return FolderDTO.from(folder, 0L);

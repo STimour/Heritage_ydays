@@ -1,0 +1,15 @@
+meta {
+  name: Remove Story From Folder
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/folders/{{folderId}}/stories/{{storyId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,9 +1,16 @@
 package com.backend.heritage.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.backend.heritage.dto.*;
+import com.backend.heritage.model.entity.*;
+import com.backend.heritage.model.enums.Theme;
+import com.backend.heritage.model.enums.Visibility;
+import org.springframework.http.HttpStatus;
+import com.backend.heritage.model.key.FolderStoryId;
+import com.backend.heritage.model.key.StoryCircleId;
+import com.backend.heritage.model.key.StoryInterestId;
+import com.backend.heritage.model.key.StoryTagId;
+import com.backend.heritage.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -62,9 +69,15 @@ public class StoryService {
         return enrichToFeedPage(stories, pageable);
     }
 
-    public StoryDetailDTO getDetail(Long id) {
-        var story = storyRepository.findByIdAndVisibility(id, Visibility.PUBLIC)
+    public StoryDetailDTO getDetail(Long id, String requesterEmail) {
+        var story = storyRepository.findByIdWithAuthor(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        boolean isPublic = story.getVisibility() == Visibility.PUBLIC;
+        boolean isAuthor = story.getAuthor().getEmail().equals(requesterEmail);
+        if (!isPublic && !isAuthor) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
 
         long saveCount = batchSaveCounts(List.of(id)).getOrDefault(id, 0L);
 
@@ -137,6 +150,48 @@ public class StoryService {
         return stories.map(s -> LibraryStoryDTO.from(s,
                 saveCountByStory.getOrDefault(s.getId(), 0L),
                 tagsByStory.getOrDefault(s.getId(), List.of())));
+    }
+
+    @Transactional
+    public StoryDetailDTO update(Long id, UpdateStoryRequest req, String email) {
+        var story = storyRepository.findByIdWithAuthor(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!story.getAuthor().getEmail().equals(email)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        if (req.title() != null) story.setTitle(req.title());
+        if (req.content() != null) story.setContent(req.content());
+        if (req.coverImage() != null) story.setCoverImage(req.coverImage());
+        if (req.visibility() != null) {
+            story.setVisibility(req.visibility());
+            story.setPublished(req.visibility() == Visibility.PUBLIC);
+        }
+        if (req.mainTheme() != null) story.setMainTheme(req.mainTheme());
+        storyRepository.save(story);
+
+        if (req.tags() != null) {
+            storyTagRepository.deleteByStory_Id(story.getId());
+            for (String tagName : req.tags()) {
+                var tag = tagRepository.findByName(tagName)
+                        .orElseGet(() -> tagRepository.save(Tag.builder().name(tagName).build()));
+                storyTagRepository.save(new StoryTag(new StoryTagId(story.getId(), tag.getId()), story, tag));
+            }
+        }
+
+        long saveCount = batchSaveCounts(List.of(id)).getOrDefault(id, 0L);
+        return StoryDetailDTO.from(story, saveCount, List.of());
+    }
+
+    public Page<StoryFeedItemDTO> getSavedStories(String email, Pageable pageable) {
+        var stories = storyRepository.findSavedByUserEmail(email, pageable);
+        return enrichToFeedPage(stories, pageable);
+    }
+
+    public Page<StoryFeedItemDTO> getCircleStories(Long circleId, Pageable pageable) {
+        circleRepository.findById(circleId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var stories = storyRepository.findByCircleId(circleId, pageable);
+        return enrichToFeedPage(stories, pageable);
     }
 
     @Transactional

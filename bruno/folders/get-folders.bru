@@ -1,0 +1,19 @@
+meta {
+  name: Get Folders
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/folders
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+query {
+  isPrivate: false
+}

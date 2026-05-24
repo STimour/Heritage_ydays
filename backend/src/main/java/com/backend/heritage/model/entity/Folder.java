@@ -25,6 +25,12 @@ public class Folder {
     @Column(name = "is_private")
     private boolean privateFolder;
 
+    @Column(length = 20)
+    private String tone;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

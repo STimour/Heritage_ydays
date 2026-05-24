@@ -1,2 +1,3 @@
 .env
-notes/
+.mcp.json
+.DS_Store

@@ -8,11 +8,14 @@ public record FolderDTO(
         Long id,
         String name,
         boolean privateFolder,
+        String tone,
+        String description,
         long storyCount,
         LocalDateTime createdAt
 ) {
     public static FolderDTO from(Folder folder, long storyCount) {
         return new FolderDTO(folder.getId(), folder.getName(),
-                folder.isPrivateFolder(), storyCount, folder.getCreatedAt());
+                folder.isPrivateFolder(), folder.getTone(), folder.getDescription(),
+                storyCount, folder.getCreatedAt());
     }
 }
