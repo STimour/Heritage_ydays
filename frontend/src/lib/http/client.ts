@@ -1,6 +1,5 @@
 import { ApiErrorShape } from "@/types/api";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+import { buildApiUrl } from "@/lib/api/client";
 
 export class ApiError extends Error {
   status: number;
@@ -12,7 +11,7 @@ export class ApiError extends Error {
 }
 
 export async function http<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
+  const res = await fetch(buildApiUrl(path), {
     ...init,
     headers: {
       "Content-Type": "application/json",

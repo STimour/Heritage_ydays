@@ -1,4 +1,15 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const DEFAULT_API_ORIGIN = 'http://localhost:8080';
+
+function getApiOrigin(): string {
+  const origin = process.env.NEXT_PUBLIC_API_URL ?? DEFAULT_API_ORIGIN;
+  return origin.replace(/\/+$/, '').replace(/\/api$/i, '');
+}
+
+const API_BASE_URL = `${getApiOrigin()}/api`;
+
+export function buildApiUrl(path: string): string {
+  return `${API_BASE_URL}/${path.replace(/^\/+/, '')}`;
+}
 
 function getToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -10,7 +21,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(buildApiUrl(path), {
     headers,
     ...options,
   });
