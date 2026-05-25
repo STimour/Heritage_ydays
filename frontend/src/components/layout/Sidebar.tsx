@@ -64,6 +64,26 @@ const NAV_ITEMS = [
   { href: '/profile',       label: 'Mon profil',      Icon: UserCircleIcon },
 ] as const;
 
+function LogoLink({ collapsed = false }: { collapsed?: boolean }) {
+  return (
+    <Link
+      href="/feed"
+      aria-label="Accueil Héritage"
+      className={
+        collapsed
+          ? 'w-10 h-10 flex items-center justify-center mb-8'
+          : 'w-[80px] h-[80px] flex items-center justify-center'
+      }
+    >
+      <img
+        src="/icons/icon-192x192.svg"
+        alt="Héritage"
+        className={collapsed ? 'w-7 h-7 object-contain' : 'w-14 h-14 object-contain'}
+      />
+    </Link>
+  );
+}
+
 export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
   const router   = useRouter();
@@ -88,12 +108,7 @@ export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) 
         </Link>
 
         {/* Logo */}
-        <Link href="/feed" className="w-10 h-10 flex items-center justify-center mb-8">
-          <svg width="28" height="24" viewBox="0 0 56 48" fill="none">
-            <path d="M28 0L56 48H0L28 0Z" fill="#22221F" />
-            <circle cx="44" cy="8" r="5" fill="#F37E40" />
-          </svg>
-        </Link>
+        <LogoLink collapsed />
 
         {/* Nav icons */}
         <nav className="flex flex-col gap-5">
@@ -133,12 +148,7 @@ export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) 
     >
       {/* ── Top : Logo + collapse ── */}
       <div className="flex items-center justify-between px-6 pt-6 pb-2">
-        <Link href="/feed" className="w-[80px] h-[80px] flex items-center justify-center">
-          <svg width="56" height="48" viewBox="0 0 56 48" fill="none">
-            <path d="M28 0L56 48H0L28 0Z" fill="#22221F" />
-            <circle cx="44" cy="8" r="5" fill="#F37E40" />
-          </svg>
-        </Link>
+        <LogoLink />
         <button className="w-10 h-10 bg-white rounded-[8px] flex items-center justify-center hover:bg-[#E5E3D5] transition-colors">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#22261F" strokeWidth="2" strokeLinecap="round">
             <rect x="1" y="1" width="16" height="16" rx="2" />
