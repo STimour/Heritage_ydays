@@ -41,7 +41,7 @@ function SkeletonCard() {
 /* ── Empty state ── */
 function EmptyState() {
   return (
-    <div className="col-span-4 flex flex-col items-center justify-center py-24 gap-4">
+    <div className="col-span-1 flex flex-col items-center justify-center py-24 gap-4 sm:col-span-2 lg:col-span-3 xl:col-span-4">
       <div className="w-16 h-16 rounded-full bg-[#E5E3D5] flex items-center justify-center">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="1.5">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -109,18 +109,18 @@ export default function FeedPage() {
     : stories;
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar />
 
       {/* ── Zone principale ── */}
-      <div className="flex-1 flex flex-col gap-8 px-12 py-12">
+      <div className="flex min-w-0 flex-1 flex-col gap-8 px-4 py-6 pb-24 lg:px-12 lg:py-12 lg:pb-12">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between gap-8">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
           {/* Titre */}
-          <div className="flex flex-col gap-4">
+          <div className="flex min-w-0 flex-col gap-4">
             <h1
-              className="text-[40px] font-medium text-[#22221F] leading-[36px]"
+              className="text-[32px] font-medium text-[#22221F] leading-[32px] lg:text-[40px] lg:leading-[36px]"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}
             >
               Découvrir des vies
@@ -131,7 +131,7 @@ export default function FeedPage() {
           </div>
 
           {/* Barre de recherche + filtres */}
-          <div className="flex flex-col gap-4 shrink-0 w-[436px]">
+          <div className="flex min-w-0 w-full flex-col gap-4 lg:w-[436px] lg:shrink-0">
             {/* SearchBar — 436×42, sand fill, r=12 */}
             <div className="flex items-center gap-[7px] h-[42px] bg-[#E5E3D5] rounded-[12px] px-6">
               <SearchIcon />
@@ -140,13 +140,13 @@ export default function FeedPage() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Rechercher"
-                className="flex-1 bg-transparent text-[16px] font-medium text-[#585852] placeholder:text-[#585852] outline-none"
+                className="min-w-0 flex-1 bg-transparent text-[16px] font-medium text-[#585852] placeholder:text-[#585852] outline-none"
                 style={{ fontFamily: 'var(--font-display), sans-serif' }}
               />
             </div>
 
             {/* Filtres */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <button className="flex items-center gap-1 text-[16px] font-medium text-[#585852] hover:text-[#22221F] transition-colors" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
                 Filtres <span className="text-[12px]">▾</span>
               </button>

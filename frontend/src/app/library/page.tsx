@@ -42,8 +42,7 @@ function LibraryCard({ story, me }: { story: LibraryStory; me: UserProfile | nul
   return (
     <Link
       href={`/stories/${story.id}`}
-      className="flex flex-col bg-white rounded-[16px] overflow-hidden hover:shadow-md transition-shadow"
-      style={{ width: 264, flexShrink: 0 }}
+      className="flex min-w-0 w-full flex-col overflow-hidden rounded-[16px] bg-white transition-shadow hover:shadow-md lg:w-[264px] lg:shrink-0"
     >
       {/* Cover (264×150) */}
       <div className="relative h-[150px] w-full shrink-0 overflow-hidden" style={{ backgroundColor: color }}>
@@ -53,16 +52,16 @@ function LibraryCard({ story, me }: { story: LibraryStory; me: UserProfile | nul
       </div>
 
       {/* Body */}
-      <div className="px-4 pt-[13px] flex flex-col gap-[6px]">
+      <div className="flex min-w-0 flex-col gap-[6px] px-4 pt-[13px]">
         {/* Tag + date row */}
-        <div className="flex items-center justify-between">
+        <div className="flex min-w-0 items-center justify-between gap-2">
           <span
             className="text-[12px] font-medium px-[10px] py-[6px] rounded-full"
             style={{ backgroundColor: '#E7F2FF', color: '#2D4AA3', fontFamily: 'var(--font-display), sans-serif' }}
           >
             {tagLabel(story)}
           </span>
-          <span className="text-[10px] font-medium text-[#585852]">{relativeDate(story.createdAt)}</span>
+          <span className="shrink-0 text-[10px] font-medium text-[#585852]">{relativeDate(story.createdAt)}</span>
         </div>
 
         {/* Title */}
@@ -83,15 +82,15 @@ function LibraryCard({ story, me }: { story: LibraryStory; me: UserProfile | nul
       <div className="mx-4 mt-4 h-px bg-[#E5E3D5]" />
 
       {/* Footer */}
-      <div className="mx-4 my-[13px] flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="mx-4 my-[13px] flex min-w-0 items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-2">
           {/* Avatar */}
           <div className="w-6 h-6 rounded-full bg-[#6481DC] flex items-center justify-center shrink-0">
             <span className="text-[9px] font-bold text-white">
               {me ? me.displayName.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase() : 'M'}
             </span>
           </div>
-          <span className="text-[12px] font-medium text-[#22221F]">
+          <span className="min-w-0 truncate text-[12px] font-medium text-[#22221F]">
             {me ? me.displayName.split(' ')[0] : 'Moi'}
           </span>
         </div>
@@ -151,15 +150,15 @@ export default function LibraryPage() {
     : recent;
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar />
 
-      <div className="flex-1 px-12 pt-[48px] pb-16">
+      <div className="min-w-0 flex-1 px-4 py-6 pb-24 lg:px-12 lg:pt-[48px] lg:pb-16">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between mb-8">
-          <div className="flex flex-col gap-[14px]">
-            <h1 className="text-[40px] font-medium text-[#22221F]"
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex min-w-0 flex-col gap-[14px]">
+            <h1 className="text-[32px] font-medium text-[#22221F] lg:text-[40px]"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}>
               Ma bibliothèque
             </h1>
@@ -169,7 +168,7 @@ export default function LibraryPage() {
           </div>
 
           {/* Search */}
-          <div className="flex items-center gap-[7px] h-[42px] w-[436px] bg-[#E5E3D5] rounded-[12px] px-6 shrink-0">
+          <div className="flex h-[42px] min-w-0 w-full items-center gap-[7px] rounded-[12px] bg-[#E5E3D5] px-6 lg:w-[436px] lg:shrink-0">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
@@ -178,19 +177,19 @@ export default function LibraryPage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Rechercher"
-              className="flex-1 bg-transparent text-[16px] font-medium text-[#585852] placeholder:text-[#585852] outline-none"
+              className="min-w-0 flex-1 bg-transparent text-[16px] font-medium text-[#585852] placeholder:text-[#585852] outline-none"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}
             />
           </div>
         </div>
 
         {/* ── Tabs ── */}
-        <div className="flex gap-2 mb-8">
+        <div className="mb-8 flex max-w-full gap-2 overflow-x-auto pb-1">
           {TABS.map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className="h-[36px] px-5 rounded-[8px] text-[12px] font-medium transition-colors"
+              className="h-[36px] shrink-0 px-5 rounded-[8px] text-[12px] font-medium transition-colors"
               style={{
                 backgroundColor: tab === t ? '#22221F' : '#FFFFFF',
                 color: tab === t ? '#FBFAF4' : '#22221F',
@@ -205,7 +204,7 @@ export default function LibraryPage() {
         {/* ── Favoris tab ── */}
         {tab === 'Favoris' && (
           favLoading ? (
-            <div className="grid gap-6" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[1,2,3,4].map(i => <div key={i} className="h-[320px] bg-[#E5E3D5] rounded-[16px] animate-pulse" />)}
             </div>
           ) : savedStories.length === 0 ? (
@@ -225,7 +224,10 @@ export default function LibraryPage() {
         {tab !== 'Favoris' && loading ? (
           <div className="animate-pulse flex flex-col gap-8">
             <div className="h-[180px] bg-[#E5E3D5] rounded-[16px]" />
-            <div className="grid gap-6" style={{ gridTemplateColumns: 'repeat(4, 264px)' }}>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:hidden">
+              {[1,2,3,4].map(i => <div key={i} className="h-[389px] bg-[#E5E3D5] rounded-[16px]" />)}
+            </div>
+            <div className="hidden gap-6 lg:grid" style={{ gridTemplateColumns: 'repeat(4, 264px)' }}>
               {[1,2,3,4].map(i => <div key={i} className="h-[389px] bg-[#E5E3D5] rounded-[16px]" />)}
             </div>
           </div>
@@ -239,7 +241,7 @@ export default function LibraryPage() {
                   Continuer la lecture
                 </h2>
                 <div
-                  className="relative h-[180px] rounded-[16px] overflow-hidden mb-10 flex items-center"
+                  className="relative mb-10 flex min-h-[180px] flex-col gap-5 overflow-hidden rounded-[16px] px-5 py-6 lg:h-[180px] lg:flex-row lg:items-center lg:gap-0 lg:px-0 lg:py-0"
                   style={{ backgroundColor: '#E5E3D5' }}
                 >
                   {/* Decorative blob */}
@@ -248,18 +250,18 @@ export default function LibraryPage() {
 
                   {/* Book cover */}
                   <div
-                    className="relative z-10 ml-8 shrink-0 flex items-center justify-center rounded-[4px]"
+                    className="relative z-10 flex shrink-0 items-center justify-center rounded-[4px] lg:ml-8"
                     style={{ width: 100, height: 132, backgroundColor: '#22221F' }}
                   >
                     <span className="text-[18px] font-bold text-[#FBFAF4]">H.É.</span>
                   </div>
 
                   {/* Info */}
-                  <div className="relative z-10 ml-7 flex flex-col justify-center gap-[6px] flex-1">
+                  <div className="relative z-10 flex min-w-0 flex-1 flex-col justify-center gap-[6px] lg:ml-7">
                     <span className="text-[11px] font-medium text-[#585852] tracking-wide uppercase">
                       {tagLabel(featured)}
                     </span>
-                    <p className="text-[28px] font-medium text-[#22221F] leading-tight line-clamp-1"
+                    <p className="min-w-0 text-[28px] font-medium text-[#22221F] leading-tight line-clamp-1"
                       style={{ fontFamily: 'var(--font-display), sans-serif' }}>
                       {featured.title}
                     </p>
@@ -268,7 +270,7 @@ export default function LibraryPage() {
                     </p>
 
                     {/* Progress bar */}
-                    <div className="flex items-center gap-3 mt-1" style={{ width: 440 }}>
+                    <div className="mt-1 flex w-full items-center gap-3 lg:w-[440px]">
                       <div className="flex-1 h-[6px] rounded-full bg-[#FBFAF4] overflow-hidden">
                         <div className="h-full rounded-full bg-[#22221F]" style={{ width: '65%' }} />
                       </div>
@@ -279,8 +281,8 @@ export default function LibraryPage() {
                   {/* Resume button */}
                   <Link
                     href={`/stories/${featured.id}`}
-                    className="relative z-10 mr-8 shrink-0 flex items-center justify-center rounded-[8px] text-[13px] font-medium text-[#FBFAF4] hover:opacity-90 transition-opacity"
-                    style={{ width: 200, height: 48, backgroundColor: '#22221F', fontFamily: 'var(--font-display), sans-serif' }}
+                    className="relative z-10 flex h-[48px] w-full shrink-0 items-center justify-center rounded-[8px] text-[13px] font-medium text-[#FBFAF4] transition-opacity hover:opacity-90 lg:mr-8 lg:w-[200px]"
+                    style={{ backgroundColor: '#22221F', fontFamily: 'var(--font-display), sans-serif' }}
                   >
                     Reprendre la lecture
                   </Link>
@@ -289,15 +291,15 @@ export default function LibraryPage() {
             )}
 
             {/* ── Récemment ajoutés ── */}
-            <div className="flex items-center justify-between mb-5">
+            <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <h2 className="text-[22px] font-medium text-[#22221F]"
                 style={{ fontFamily: 'var(--font-display), sans-serif' }}>
                 Récemment ajoutés
               </h2>
               {/* Filtres */}
               <button
-                className="flex items-center gap-2 h-[40px] px-5 bg-white rounded-[8px] text-[14px] font-medium text-[#585852] hover:bg-[#F5F4EE] transition-colors"
-                style={{ width: 140, fontFamily: 'var(--font-display), sans-serif' }}
+                className="flex h-[40px] w-full items-center justify-center gap-2 rounded-[8px] bg-white px-5 text-[14px] font-medium text-[#585852] transition-colors hover:bg-[#F5F4EE] lg:w-[140px]"
+                style={{ fontFamily: 'var(--font-display), sans-serif' }}
               >
                 Filtres
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -315,9 +317,14 @@ export default function LibraryPage() {
                 </Link>
               </div>
             ) : (
-              <div className="grid gap-6" style={{ gridTemplateColumns: 'repeat(4, 264px)' }}>
-                {filtered.map(s => <LibraryCard key={s.id} story={s} me={me} />)}
-              </div>
+              <>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:hidden">
+                  {filtered.map(s => <LibraryCard key={s.id} story={s} me={me} />)}
+                </div>
+                <div className="hidden gap-6 lg:grid" style={{ gridTemplateColumns: 'repeat(4, 264px)' }}>
+                  {filtered.map(s => <LibraryCard key={s.id} story={s} me={me} />)}
+                </div>
+              </>
             )}
           </>
         )}

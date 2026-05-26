@@ -25,11 +25,9 @@ export const metadata: Metadata = {
     title: "Héritage",
   },
   icons: {
-    icon: [
-      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+    icon: "/icons/icon-192x192.svg",
+    shortcut: "/icons/icon-192x192.svg",
+    apple: "/icons/icon-192x192.svg",
   },
 };
 
@@ -42,6 +40,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr" className={`${displayFont.variable} ${bodyFont.variable} h-full`}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap"
+        />
+      </head>
       <body className="min-h-full flex flex-col"><ClientLayout>{children}</ClientLayout></body>
     </html>
   );

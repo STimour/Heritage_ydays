@@ -38,12 +38,11 @@ function UsersIcon({ active }: { active: boolean }) {
     </svg>
   );
 }
-function UserCircleIcon({ active }: { active: boolean }) {
+function UserIcon({ active }: { active: boolean }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={active ? '#22221F' : '#585852'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
-      <circle cx="12" cy="12" r="10" />
     </svg>
   );
 }
@@ -55,13 +54,29 @@ function PencilIcon() {
     </svg>
   );
 }
-
+function PencilNavIcon({ active }: { active: boolean }) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={active ? '#22221F' : '#585852'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+    </svg>
+  );
+}
 const NAV_ITEMS = [
   { href: '/feed',          label: 'Accueil',         Icon: HomeIcon },
   { href: '/saves',         label: 'Mes sauvegardes', Icon: BookmarkIcon },
   { href: '/library',       label: 'Ma bibliothèque', Icon: BookIcon },
   { href: '/groups',        label: 'Mes groupes',     Icon: UsersIcon },
-  { href: '/profile',       label: 'Mon profil',      Icon: UserCircleIcon },
+  { href: '/profile',       label: 'Mon profil',      Icon: UserIcon },
+] as const;
+
+const MOBILE_NAV_ITEMS = [
+  { href: '/feed',        label: 'Accueil',     Icon: HomeIcon },
+  { href: '/library',     label: 'Biblio',      Icon: BookIcon },
+  { href: '/saves',       label: 'Sauvegardes', Icon: BookmarkIcon },
+  { href: '/groups',      label: 'Groupes',     Icon: UsersIcon },
+  { href: '/stories/new', label: 'Écrire',      Icon: PencilNavIcon },
+  { href: '/profile',     label: 'Profil',      Icon: UserIcon },
 ] as const;
 
 function LogoLink({ collapsed = false }: { collapsed?: boolean }) {
@@ -84,6 +99,34 @@ function LogoLink({ collapsed = false }: { collapsed?: boolean }) {
   );
 }
 
+function MobileNav() {
+  const pathname = usePathname();
+
+  return (
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 grid grid-cols-6 border-t border-[#E5E3D5] bg-[#FBFAF4]/95 px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_rgba(34,34,31,0.08)] backdrop-blur lg:hidden"
+      style={{ fontFamily: 'var(--font-display), sans-serif' }}
+    >
+      {MOBILE_NAV_ITEMS.map(({ href, label, Icon }) => {
+        const active = pathname === href;
+        return (
+          <Link
+            key={href}
+            href={href}
+            aria-label={label}
+            className={`flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-[8px] text-[10px] font-medium transition-colors ${
+              active ? 'text-[#22221F]' : 'text-[#585852]'
+            }`}
+          >
+            <Icon active={active} />
+            <span className="max-w-full truncate">{label}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
   const router   = useRouter();
@@ -95,6 +138,8 @@ export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) 
 
   if (collapsed) {
     return (
+      <>
+      <MobileNav />
       <aside
         className="hidden lg:flex flex-col items-center w-[96px] shrink-0 min-h-screen bg-[#FBFAF4] border-r border-[#E5E3D5] py-6"
         style={{ fontFamily: 'var(--font-body), sans-serif' }}
@@ -138,10 +183,13 @@ export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) 
           </Link>
         </div>
       </aside>
+      </>
     );
   }
 
   return (
+    <>
+    <MobileNav />
     <aside
       className="hidden lg:flex flex-col w-[247px] shrink-0 min-h-screen bg-[#FBFAF4] border-r border-[#E5E3D5]"
       style={{ fontFamily: 'var(--font-body), sans-serif' }}
@@ -207,5 +255,6 @@ export default function Sidebar({ collapsed = false }: { collapsed?: boolean }) 
         </Link>
       </div>
     </aside>
+    </>
   );
 }
