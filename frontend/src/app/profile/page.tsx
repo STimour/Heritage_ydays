@@ -32,7 +32,7 @@ function initials(name: string): string {
 /* ── Stat card ── */
 function StatCard({ value, label }: { value: number | string; label: string }) {
   return (
-    <div className="flex flex-col gap-2 bg-white px-6 pt-5 pb-4 flex-1">
+    <div className="flex min-w-0 flex-1 flex-col gap-2 bg-white px-6 pt-5 pb-4">
       <span className="text-[32px] font-bold text-[#22221F] leading-none" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
         {typeof value === 'number' ? value.toLocaleString('fr-FR') : value}
       </span>
@@ -52,15 +52,15 @@ function LibraryCard({ story, authorName }: { story: LibraryStory; authorName: s
   return (
     <Link
       href={`/stories/${story.id}`}
-      className="flex flex-col bg-white rounded-[16px] overflow-hidden hover:shadow-md transition-shadow"
-      style={{ fontFamily: 'var(--font-body), sans-serif', width: '264px', flexShrink: 0 }}
+      className="flex min-w-0 w-full flex-col overflow-hidden rounded-[16px] bg-white transition-shadow hover:shadow-md lg:w-[264px] lg:shrink-0"
+      style={{ fontFamily: 'var(--font-body), sans-serif' }}
     >
       {/* Cover */}
       <div className="h-[150px] w-full shrink-0" style={{ backgroundColor: coverColor }} />
 
       {/* Body */}
-      <div className="flex flex-col gap-3 px-4 pt-[13px]">
-        <div className="flex items-center justify-between">
+      <div className="flex min-w-0 flex-col gap-3 px-4 pt-[13px]">
+        <div className="flex min-w-0 items-center justify-between gap-2">
           {story.tags?.[0] && (
             <span className="text-[12px] font-medium px-[10px] py-[4px] rounded-full"
               style={{ backgroundColor: '#E7F2FF', color: '#2D4AA3' }}>
@@ -84,8 +84,8 @@ function LibraryCard({ story, authorName }: { story: LibraryStory; authorName: s
       <div className="mx-4 mt-4 h-px bg-[#E5E3D5]" />
 
       {/* Footer */}
-      <div className="mx-4 my-[13px] flex items-center justify-between">
-        <span className="text-[12px] font-medium text-[#22221F]" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
+      <div className="mx-4 my-[13px] flex min-w-0 items-center justify-between gap-3">
+        <span className="min-w-0 truncate text-[12px] font-medium text-[#22221F]" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
           {authorName}
         </span>
         <span className="text-[10px] font-medium text-[#22221F] flex items-center gap-1">
@@ -118,12 +118,12 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-[#FBFAF4]">
+      <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]">
         <Sidebar />
-        <div className="flex-1 animate-pulse p-12 flex flex-col gap-6">
+        <div className="flex min-w-0 flex-1 animate-pulse flex-col gap-6 p-4 pb-24 lg:p-12">
           <div className="h-10 w-48 bg-[#E5E3D5] rounded" />
           <div className="h-[220px] bg-[#E5E3D5] rounded-[16px]" />
-          <div className="flex gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
             {[1,2,3,4].map(i => <div key={i} className="flex-1 h-[100px] bg-[#E5E3D5] rounded" />)}
           </div>
         </div>
@@ -136,14 +136,14 @@ export default function ProfilePage() {
   const ini = initials(profile.displayName);
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar />
 
       {/* ── Content ── */}
-      <div className="flex-1 px-12 pt-[48px] pb-16">
+      <div className="min-w-0 flex-1 px-4 py-6 pb-24 lg:px-12 lg:pt-[48px] lg:pb-16">
 
         {/* Header */}
-        <h1 className="text-[40px] font-medium text-[#22221F] mb-[14px]"
+        <h1 className="text-[32px] font-medium text-[#22221F] mb-[14px] lg:text-[40px]"
           style={{ fontFamily: 'var(--font-display), sans-serif' }}>
           Mon profil
         </h1>
@@ -152,9 +152,9 @@ export default function ProfilePage() {
         </p>
 
         {/* Cover banner */}
-        <div className="relative w-full h-[220px] bg-[#E5E3D5] rounded-[16px] mb-5 flex items-center px-5">
+        <div className="relative mb-5 flex w-full flex-col items-start gap-4 rounded-[16px] bg-[#E5E3D5] px-5 py-5 lg:h-[220px] lg:flex-row lg:items-center lg:gap-0 lg:py-0">
           {/* Avatar */}
-          <div className="w-[140px] h-[140px] rounded-full bg-[#22221F] flex items-center justify-center shrink-0 overflow-hidden">
+          <div className="h-[96px] w-[96px] shrink-0 overflow-hidden rounded-full bg-[#22221F] flex items-center justify-center lg:h-[140px] lg:w-[140px]">
             {profile.photo ? (
               <img src={profile.photo} alt={profile.displayName} className="w-full h-full object-cover" />
             ) : (
@@ -166,8 +166,8 @@ export default function ProfilePage() {
           </div>
 
           {/* Info */}
-          <div className="ml-6 flex flex-col gap-1">
-            <span className="text-[32px] font-medium text-[#22221F]"
+          <div className="flex min-w-0 flex-col gap-1 lg:ml-6">
+            <span className="min-w-0 break-words text-[24px] font-medium text-[#22221F] lg:text-[32px]"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}>
               {profile.displayName}
             </span>
@@ -181,7 +181,7 @@ export default function ProfilePage() {
           {/* Edit button */}
           <Link
             href="/settings"
-            className="absolute right-5 top-1/2 -translate-y-1/2 flex items-center justify-center px-6 h-[48px] bg-[#22221F] rounded-[8px] text-[14px] font-medium text-[#FBFAF4] hover:opacity-90 transition-opacity"
+            className="flex h-[48px] w-full items-center justify-center rounded-[8px] bg-[#22221F] px-6 text-[14px] font-medium text-[#FBFAF4] transition-opacity hover:opacity-90 lg:absolute lg:right-5 lg:top-1/2 lg:w-auto lg:-translate-y-1/2"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
           >
             Modifier le profil
@@ -189,7 +189,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Stats */}
-        <div className="flex gap-5 mb-10">
+        <div className="mb-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:flex">
           <StatCard value={profile.storyCount}  label="Récits publiés" />
           <StatCard value={profile.savedCount}  label="Sauvegardes reçues" />
           <StatCard value={profile.folderCount} label="Groupes rejoints" />
@@ -197,7 +197,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Section header */}
-        <div className="flex items-baseline justify-between mb-6">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
           <h2 className="text-[24px] font-medium text-[#22221F]"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}>
             Mes derniers récits
@@ -218,7 +218,7 @@ export default function ProfilePage() {
             </Link>
           </div>
         ) : (
-          <div className="flex gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:flex">
             {stories.map(s => (
               <LibraryCard key={s.id} story={s} authorName={profile.displayName} />
             ))}

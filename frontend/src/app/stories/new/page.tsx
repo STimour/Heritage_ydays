@@ -204,14 +204,14 @@ export default function NewStoryPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar collapsed />
 
       {/* ── Editor + Right panel ── */}
-      <div className="flex flex-1 min-h-screen">
+      <div className="flex min-w-0 min-h-screen flex-1 flex-col pb-24 lg:flex-row lg:pb-0">
 
         {/* ── Editor ── */}
-        <div className="flex flex-col flex-1 px-[24px] pt-[48px] pb-0 relative">
+        <div className="relative flex min-w-0 flex-1 flex-col px-4 pt-6 pb-0 lg:px-[24px] lg:pt-[48px]">
 
           {/* Title */}
           <input
@@ -219,7 +219,7 @@ export default function NewStoryPage() {
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="Titre de l'histoire"
-            className="w-full bg-transparent text-[56px] font-medium text-[#22221F] placeholder:text-[#E5E3D5] outline-none leading-tight mb-6"
+            className="min-w-0 w-full bg-transparent text-[36px] font-medium text-[#22221F] placeholder:text-[#E5E3D5] outline-none leading-tight mb-6 lg:text-[56px]"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
           />
 
@@ -232,13 +232,13 @@ export default function NewStoryPage() {
             value={content}
             onChange={e => setContent(e.target.value)}
             placeholder="Commencer à écrire de l'histoire"
-            className="flex-1 w-full bg-transparent text-[16px] font-medium text-[#22221F] placeholder:text-[#585852] outline-none resize-none leading-[1.7] pb-[80px]"
+            className="min-w-0 flex-1 w-full bg-transparent text-[16px] font-medium text-[#22221F] placeholder:text-[#585852] outline-none resize-none leading-[1.7] pb-[80px]"
             style={{ fontFamily: 'var(--font-body), sans-serif', minHeight: '400px' }}
           />
 
           {/* Bottom formatting toolbar */}
-          <div className="sticky bottom-0 flex justify-end pb-4">
-            <div className="flex items-center gap-0 bg-[#FBFAF4] border border-[#E5E3D5] rounded-[8px] px-2 py-1">
+          <div className="sticky bottom-0 flex max-w-full justify-end overflow-x-auto pb-4">
+            <div className="flex shrink-0 items-center gap-0 bg-[#FBFAF4] border border-[#E5E3D5] rounded-[8px] px-2 py-1">
               {([
                 { el: <BoldIcon />,   title: 'Gras',     fmt: 'bold'   as const },
                 { el: <ItalicIcon />, title: 'Italique', fmt: 'italic' as const },
@@ -266,13 +266,13 @@ export default function NewStoryPage() {
 
         {/* ── Right panel "Paramètres" ── */}
         <div
-          className="w-[362px] shrink-0 border-l border-[#E5E3D5] flex flex-col pt-[48px] pb-8 overflow-y-auto"
+          className="flex min-w-0 w-full flex-col border-t border-[#E5E3D5] pt-8 pb-8 lg:w-[362px] lg:shrink-0 lg:border-l lg:border-t-0 lg:pt-[48px] overflow-y-auto"
           style={{ fontFamily: 'var(--font-body), sans-serif' }}
         >
-          <div className="px-8 flex flex-col gap-0">
+          <div className="flex min-w-0 flex-col gap-0 px-4 lg:px-8">
 
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6 flex min-w-0 items-center justify-between gap-3">
               <span className="text-[22px] font-medium text-[#22221F]" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
                 Paramètres
               </span>
@@ -328,7 +328,7 @@ export default function NewStoryPage() {
             <p className="text-[16px] font-medium text-[#22221F] mb-4" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
               Tonalité
             </p>
-            <div className="flex items-center gap-[14px] mb-8">
+            <div className="mb-8 flex flex-wrap items-center gap-[14px]">
               {TONE_OPTIONS.map(({ theme: t, color }) => {
                 const selected = theme === t;
                 return (
@@ -360,7 +360,7 @@ export default function NewStoryPage() {
             <p className="text-[16px] font-medium text-[#22221F] mb-3" style={{ fontFamily: 'var(--font-display), sans-serif' }}>
               Étiquettes (Tags)
             </p>
-            <div className="flex items-center gap-2 bg-white border border-[#E5E3D5] rounded-[8px] px-3 py-[10px] mb-3">
+            <div className="mb-3 flex min-w-0 items-center gap-2 rounded-[8px] border border-[#E5E3D5] bg-white px-3 py-[10px]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
               </svg>
@@ -370,7 +370,7 @@ export default function NewStoryPage() {
                 onChange={e => setTagInput(e.target.value)}
                 onKeyDown={addTag}
                 placeholder="Famille, voyage, ..."
-                className="flex-1 bg-transparent text-[14px] text-[#22221F] placeholder:text-[#E5E3D5] outline-none"
+                className="min-w-0 flex-1 bg-transparent text-[14px] text-[#22221F] placeholder:text-[#E5E3D5] outline-none"
               />
             </div>
             {tags.length > 0 && (

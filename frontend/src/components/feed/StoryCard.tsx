@@ -50,7 +50,7 @@ export default function StoryCard({ story }: { story: StoryFeedItem }) {
     <>
     <Link
       href={`/stories/${story.id}`}
-      className="flex flex-col bg-white rounded-[16px] overflow-hidden hover:shadow-md transition-shadow"
+      className="flex min-w-0 flex-col bg-white rounded-[16px] overflow-hidden hover:shadow-md transition-shadow"
       style={{ fontFamily: 'var(--font-body), sans-serif' }}
     >
       {/* ── Cover (150px) ── */}
@@ -68,8 +68,8 @@ export default function StoryCard({ story }: { story: StoryFeedItem }) {
       </div>
 
       {/* ── Body ── */}
-      <div className="flex flex-col gap-4 px-4 pt-[13px]">
-        <div className="flex flex-col gap-[6px]">
+      <div className="flex min-w-0 flex-col gap-4 px-4 pt-[13px]">
+        <div className="flex min-w-0 flex-col gap-[6px]">
           {/* Date */}
           <p
             className="text-[10px] font-medium text-[#585852]"
@@ -95,9 +95,9 @@ export default function StoryCard({ story }: { story: StoryFeedItem }) {
       <div className="mx-4 mt-4 h-px bg-[#E5E3D5]" />
 
       {/* ── Footer ── */}
-      <div className="mx-4 my-[13px] flex items-center justify-between">
+      <div className="mx-4 my-[13px] flex min-w-0 items-center justify-between gap-3">
         <span
-          className="text-[12px] font-medium text-[#22221F]"
+          className="min-w-0 truncate text-[12px] font-medium text-[#22221F]"
           style={{ fontFamily: 'var(--font-display), sans-serif' }}
         >
           {story.authorName}

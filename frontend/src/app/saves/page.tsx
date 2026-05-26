@@ -55,7 +55,7 @@ function FolderCard({ folder, color, onDelete }: { folder: FolderDTO; color: str
   }
 
   return (
-    <div className="flex flex-col bg-white rounded-[16px] overflow-hidden">
+    <div className="flex min-w-0 flex-col bg-white rounded-[16px] overflow-hidden">
       {/* Banner coloré */}
       <div className="h-[140px] flex-shrink-0" style={{ backgroundColor: color }}>
         <BannerIllustration color={color} />
@@ -63,9 +63,9 @@ function FolderCard({ folder, color, onDelete }: { folder: FolderDTO; color: str
 
       {/* Body */}
       <div className="flex flex-col px-5 pt-4 pb-5 gap-3">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 items-start justify-between gap-2">
           <p
-            className="text-[18px] font-semibold text-[#22221F] leading-snug"
+            className="min-w-0 break-words text-[18px] font-semibold text-[#22221F] leading-snug"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
           >
             {folder.name}
@@ -151,15 +151,15 @@ function NewFolderModal({ onClose, onCreate }: {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4"
       onClick={onClose}
     >
       <div
-        className="bg-[#FBFAF4] rounded-[16px] w-[480px] shadow-xl flex flex-col overflow-hidden"
+        className="bg-[#FBFAF4] rounded-[16px] w-full max-w-[480px] shadow-xl flex flex-col overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-8 pt-7 pb-5">
+        <div className="flex items-center justify-between px-5 pt-7 pb-5 lg:px-8">
           <h2
             className="text-[22px] font-semibold text-[#22221F]"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
@@ -176,7 +176,7 @@ function NewFolderModal({ onClose, onCreate }: {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 px-8 pb-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5 px-5 pb-8 lg:px-8">
           {/* Nom */}
           <div className="flex flex-col gap-2">
             <label className="text-[13px] font-medium text-[#585852]">Nom du dossier</label>
@@ -205,7 +205,7 @@ function NewFolderModal({ onClose, onCreate }: {
           {/* Tonalité */}
           <div className="flex flex-col gap-3">
             <label className="text-[13px] font-medium text-[#585852]">Tonalité <span className="font-normal">(optionnelle)</span></label>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {FOLDER_TONES.map(({ value, label, color }) => {
                 const selected = tone === value;
                 return (
@@ -246,7 +246,7 @@ function NewFolderModal({ onClose, onCreate }: {
           </label>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-1">
+          <div className="flex flex-col gap-3 pt-1 sm:flex-row">
             <button
               type="button"
               onClick={onClose}
@@ -302,16 +302,16 @@ export default function SavesPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar />
 
-      <div className="flex-1 flex flex-col gap-8 px-12 py-12">
+      <div className="flex min-w-0 flex-1 flex-col gap-8 px-4 py-6 pb-24 lg:px-12 lg:py-12 lg:pb-12">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex min-w-0 flex-col gap-2">
             <h1
-              className="text-[40px] font-medium text-[#22221F] leading-[1]"
+              className="text-[32px] font-medium text-[#22221F] leading-[1] lg:text-[40px]"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}
             >
               Mes sauvegardes
@@ -323,7 +323,7 @@ export default function SavesPage() {
 
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 px-5 py-3 bg-[#22221F] rounded-[10px] text-[14px] font-medium text-white hover:opacity-90 transition-opacity shrink-0"
+            className="flex w-full shrink-0 items-center justify-center gap-2 rounded-[10px] bg-[#22221F] px-5 py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90 lg:w-auto"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
@@ -353,7 +353,7 @@ export default function SavesPage() {
             ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
             : folders.length === 0
               ? (
-                <div className="col-span-3 flex flex-col items-center justify-center py-24 gap-4">
+                <div className="col-span-1 flex flex-col items-center justify-center py-24 gap-4 sm:col-span-2 lg:col-span-3">
                   <div className="w-16 h-16 rounded-full bg-[#E5E3D5] flex items-center justify-center">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="1.5" strokeLinecap="round">
                       <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />

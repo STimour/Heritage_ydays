@@ -21,8 +21,7 @@ function GroupCard({ circle }: { circle: Circle }) {
   return (
     <Link
       href={`/groups/${circle.id}`}
-      className="flex flex-col bg-white rounded-[16px] overflow-hidden hover:shadow-md transition-shadow"
-      style={{ width: 355, flexShrink: 0 }}
+      className="flex min-w-0 w-full flex-col overflow-hidden rounded-[16px] bg-white transition-shadow hover:shadow-md lg:w-[355px] lg:shrink-0"
     >
       {/* Cover (355×160) */}
       <div className="relative h-[160px] w-full overflow-hidden" style={{ backgroundColor: color }}>
@@ -48,8 +47,8 @@ function GroupCard({ circle }: { circle: Circle }) {
       </div>
 
       {/* Body */}
-      <div className="px-6 pt-5 pb-0">
-        <h3 className="text-[22px] font-medium text-[#22221F] mb-2 line-clamp-1"
+      <div className="min-w-0 px-6 pt-5 pb-0">
+        <h3 className="min-w-0 text-[22px] font-medium text-[#22221F] mb-2 line-clamp-1"
           style={{ fontFamily: 'var(--font-display), sans-serif' }}>
           {circle.name}
         </h3>
@@ -65,7 +64,7 @@ function GroupCard({ circle }: { circle: Circle }) {
       <div className="mx-6 h-px bg-[#E5E3D5]" />
 
       {/* Footer */}
-      <div className="mx-6 my-4 flex items-center justify-between">
+      <div className="mx-6 my-4 flex min-w-0 items-center justify-between">
         <span className="text-[12px] font-medium text-[#22221F]">
           {circle.memberCount} membre{circle.memberCount !== 1 ? 's' : ''}
         </span>
@@ -88,7 +87,7 @@ function GroupCard({ circle }: { circle: Circle }) {
 /* ── Empty state ── */
 function EmptyState() {
   return (
-    <div className="col-span-3 flex flex-col items-center justify-center py-24 gap-4">
+    <div className="col-span-1 flex flex-col items-center justify-center py-24 gap-4 sm:col-span-2 lg:col-span-3">
       <div className="w-16 h-16 rounded-full bg-[#E5E3D5] flex items-center justify-center">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#585852" strokeWidth="1.5">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
@@ -125,15 +124,15 @@ export default function GroupsPage() {
   }, [router]);
 
   return (
-    <div className="flex min-h-screen bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
+    <div className="flex min-h-screen overflow-x-hidden bg-[#FBFAF4]" style={{ fontFamily: 'var(--font-body), sans-serif' }}>
       <Sidebar />
 
-      <div className="flex-1 px-12 pt-[48px] pb-16">
+      <div className="min-w-0 flex-1 px-4 py-6 pb-24 lg:px-12 lg:pt-[48px] lg:pb-16">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between mb-8">
-          <div className="flex flex-col gap-[14px]">
-            <h1 className="text-[40px] font-medium text-[#22221F]"
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex min-w-0 flex-col gap-[14px]">
+            <h1 className="text-[32px] font-medium text-[#22221F] lg:text-[40px]"
               style={{ fontFamily: 'var(--font-display), sans-serif' }}>
               Mes groupes
             </h1>
@@ -143,7 +142,7 @@ export default function GroupsPage() {
           </div>
           <Link
             href="/groups/new"
-            className="flex items-center gap-2 h-[54px] px-6 bg-[#22221F] rounded-[8px] text-[14px] font-bold text-[#FBFAF4] hover:opacity-90 transition-opacity shrink-0"
+            className="flex h-[54px] w-full shrink-0 items-center justify-center gap-2 rounded-[8px] bg-[#22221F] px-6 text-[14px] font-bold text-[#FBFAF4] transition-opacity hover:opacity-90 lg:w-auto"
             style={{ fontFamily: 'var(--font-display), sans-serif' }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBFAF4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -154,12 +153,12 @@ export default function GroupsPage() {
         </div>
 
         {/* ── Tabs ── */}
-        <div className="flex gap-2 mb-8">
+        <div className="mb-8 flex max-w-full gap-2 overflow-x-auto pb-1">
           {TABS.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="h-[40px] px-5 rounded-[8px] text-[13px] font-medium transition-colors"
+              className="h-[40px] shrink-0 px-5 rounded-[8px] text-[13px] font-medium transition-colors"
               style={{
                 backgroundColor: activeTab === tab ? '#22221F' : '#FFFFFF',
                 color: activeTab === tab ? '#FBFAF4' : '#22221F',
@@ -173,17 +172,29 @@ export default function GroupsPage() {
 
         {/* ── Grid ── */}
         {loading ? (
-          <div className="grid gap-5" style={{ gridTemplateColumns: 'repeat(3, 355px)' }}>
-            {[1,2,3,4,5,6].map(i => (
-              <div key={i} className="h-[380px] bg-[#E5E3D5] rounded-[16px] animate-pulse" />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:hidden">
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="h-[380px] bg-[#E5E3D5] rounded-[16px] animate-pulse" />
+              ))}
+            </div>
+            <div className="hidden gap-5 lg:grid" style={{ gridTemplateColumns: 'repeat(3, 355px)' }}>
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="h-[380px] bg-[#E5E3D5] rounded-[16px] animate-pulse" />
+              ))}
+            </div>
+          </>
         ) : circles.length === 0 ? (
           <EmptyState />
         ) : (
-          <div className="grid gap-5" style={{ gridTemplateColumns: 'repeat(3, 355px)' }}>
-            {circles.map(c => <GroupCard key={c.id} circle={c} />)}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:hidden">
+              {circles.map(c => <GroupCard key={c.id} circle={c} />)}
+            </div>
+            <div className="hidden gap-5 lg:grid" style={{ gridTemplateColumns: 'repeat(3, 355px)' }}>
+              {circles.map(c => <GroupCard key={c.id} circle={c} />)}
+            </div>
+          </>
         )}
       </div>
     </div>

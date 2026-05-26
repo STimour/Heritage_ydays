@@ -52,11 +52,11 @@ export default function AddToFolderModal({ storyId, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
       onClick={onClose}
     >
       <div
-        className="bg-[#FBFAF4] rounded-[16px] w-[440px] shadow-xl flex flex-col overflow-hidden"
+        className="bg-[#FBFAF4] rounded-[16px] w-full max-w-[440px] shadow-xl flex flex-col overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
