@@ -12,10 +12,10 @@ export default function Hero() {
       <div className="max-w-[1440px] mx-auto px-[100px] relative">
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 border border-[#22221F] rounded-[16px] px-4 py-2 mt-[52px] mb-6">
+        {/* <div className="inline-flex items-center gap-2 border border-[#22221F] rounded-[16px] px-4 py-2 mt-[52px] mb-6">
           <span className="w-2 h-2 rounded-full bg-[#AEE290]" />
           
-        </div>
+        </div> */}
 
         {/* Titre — max-w calqué sur Figma (1100px sur 1440) */}
         <h1 className="font-display font-medium text-[#22221F] leading-[1.0] mb-6 max-w-full lg:max-w-[52%]
