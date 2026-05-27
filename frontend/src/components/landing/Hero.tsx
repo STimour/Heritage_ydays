@@ -14,7 +14,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 border border-[#22221F] rounded-[16px] px-4 py-2 mt-[52px] mb-6">
           <span className="w-2 h-2 rounded-full bg-[#AEE290]" />
-          <span className="text-[11px] font-semibold text-[#22221F]">Nouveau · écriture guidée par IA</span>
+          
         </div>
 
         {/* Titre — max-w calqué sur Figma (1100px sur 1440) */}
